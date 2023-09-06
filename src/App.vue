@@ -3,9 +3,14 @@
 </script>
 
 <template>
-  <el-button type="primary">按钮</el-button>
+  <router-view></router-view>
+  <div class="test">
+    test scss
+  </div>
 </template>
 
-<style scoped>
-
+<style scoped lang="scss">
+.test {
+  color: $sucColor;
+}
 </style>
