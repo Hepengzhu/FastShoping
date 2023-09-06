@@ -1,7 +1,7 @@
 # fastshoping
 
-# 技术栈
- Vue3 + Vite + Pinia + Vue-router + elementPlus + element主题定制
+## 技术栈
+# Vue3 + Vite + Pinia + Vue-router + elementPlus + element主题定制 + axios
 
 ## Project Setup
 
