@@ -34,7 +34,6 @@ onMounted(() => {
         <input type="text" placeholder="搜一搜">
       </div>
       <!-- 头部购物车 -->
-      
     </div>
   </header>
 </template>
@@ -54,7 +53,7 @@ onMounted(() => {
 
     a {
       display: block;
-      height: 132px;
+      height: 130px;
       width: 100%;
       text-indent: -9999px;
       background: url('@/assets/images/logo1.png') no-repeat center 36px / contain;
