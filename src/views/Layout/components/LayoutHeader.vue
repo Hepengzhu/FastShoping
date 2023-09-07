@@ -1,4 +1,17 @@
 <script setup>
+import {getCategoryAPI} from '@/apis/layout.js'
+import {onMounted, ref} from 'vue'
+// 菜单导航栏
+const categoryList = ref([])
+
+const getCategory = async ()=>{
+    const res = await getCategoryAPI()
+    console.log(res);
+    categoryList.value = res.result
+}
+onMounted(() => {
+    getCategory()
+})
 
 </script>
 
@@ -12,9 +25,9 @@
         <li class="home">
           <RouterLink to="/">首页</RouterLink>
         </li>
-        <li> <RouterLink to="/">居家</RouterLink> </li>
-        <li> <RouterLink to="/">美食</RouterLink> </li>
-        <li> <RouterLink to="/">服饰</RouterLink> </li>
+        <li v-for="(item, index) in categoryList" :key="item.id"> 
+          <RouterLink to="/">{{ item.name }}</RouterLink>
+        </li>
       </ul>
       <div class="search">
         <i class="iconfont icon-search"></i>
@@ -44,7 +57,8 @@
       height: 132px;
       width: 100%;
       text-indent: -9999px;
-      background: url('@/assets/images/logo.png') no-repeat center 18px / contain;
+      background: url('@/assets/images/logo1.png') no-repeat center 36px / contain;
+      background-size: 160px;
     }
   }
 
