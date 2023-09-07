@@ -1,8 +1,16 @@
 <script setup>
+import {onMounted} from 'vue'
 import LayoutFooter from './components/LayoutFooter.vue';
 import LayoutHeader from './components/LayoutHeader.vue';
 import LayoutNav from './components/LayoutNav.vue';
 import LayoutFixed from './components/LayoutFixed.vue';
+// 引入pinia
+import { useCategoryStore } from '../../stores/category';
+const categoryStory = useCategoryStore()
+onMounted(() => {
+    // 触发导航栏的请求函数
+    categoryStory.getCategory()
+})
 </script>
 <template>
     <div>
