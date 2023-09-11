@@ -5,6 +5,7 @@ import HomeHot from './components/HomeHot.vue';
 import HomeProduct from './components/HomeProduct.vue';
 import HomeNew from './components/HomeNew.vue'
 import HomePanel from './components/HomePanel.vue';
+import HomeBrand from './components/HomeBrand.vue';
 </script>
 <template>
     <div class="container">
@@ -13,6 +14,7 @@ import HomePanel from './components/HomePanel.vue';
     </div>
     <HomeNew />
     <HomeHot />
+    <!-- <HomeBrand></HomeBrand> -->
     <HomeProduct />
     <!-- 测试 组件 -->
     <HomePanel title="新鲜好物" sub-title="jjjjjjjjj"></HomePanel>

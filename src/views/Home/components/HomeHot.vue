@@ -2,22 +2,25 @@
 import HomePanel from './HomePanel.vue'
 import { getHotAPI } from '@/apis/home'
 import { ref,onMounted } from 'vue'
+import { useLazyData } from '@/hooks/index.js'
 
 const hotList = ref([])
-const getHotList = async () => {
-  const res = await getHotAPI()
-  hotList.value = res.result
-}
-onMounted(()=>{
-    getHotList()
-})
+const {target,result} = useLazyData(getHotAPI)
+// const getHotList = async () => {
+//   const res = await getHotAPI()
+//   hotList.value = res.result
+// }
+// onMounted(()=>{
+//     getHotList()
+// })
 </script>
 
 <template>
-  <HomePanel title="人气推荐" sub-title="人气爆款 不容错过">
+  <div ref="target">
+    <HomePanel title="人气推荐" sub-title="人气爆款 不容错过">
     <!-- 插槽部分 -->
       <ul class="goods-list">
-        <li v-for="item in hotList" :key="item.id">
+        <li v-for="item in result" :key="item.id">
           <RouterLink to="/">
             <img v-img-lazy="item.picture" alt="">
             <p class="name">{{ item.title }}</p>
@@ -26,6 +29,7 @@ onMounted(()=>{
         </li>
       </ul>
   </HomePanel>
+  </div>
 </template>
 
 <style scoped lang='scss'>
