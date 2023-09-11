@@ -2,23 +2,27 @@
 import HomePanel from './HomePanel.vue'
 import {getGoodsAPI} from '@/apis/home.js'
 import { onMounted, ref } from 'vue'
+import { useLazyData } from '@/hooks/index.js'
 
-const goodsProduct = ref([])
-const getGoods = async()=>{
-    const res = await getGoodsAPI()
-    goodsProduct.value = res.result
-}
-onMounted(()=>{
-    getGoods()
-})
+// 优化
+const {'target':goods,'result':goodsProduct} = useLazyData(getGoodsAPI)
+
+// const goodsProduct = ref([])
+// const getGoods = async()=>{
+//     const res = await getGoodsAPI()
+//     goodsProduct.value = res.result
+// }
+// onMounted(()=>{
+//     getGoods()
+// })
 </script>
 
 <template>
-  <div class="home-product">
+  <div class="home-product" ref="goods">
     <HomePanel :title="cate.name" v-for="cate in goodsProduct" :key="cate.id">
       <div class="box">
         <RouterLink class="cover" to="/">
-          <img :src="cate.picture" />
+          <img v-img-lazy="cate.picture" />
           <strong class="label">
             <span>{{ cate.name }}馆</span>
             <span>{{ cate.saleInfo }}</span>
@@ -27,7 +31,7 @@ onMounted(()=>{
         <ul class="goods-list">
           <li v-for="good in cate.goods" :key="good.id">
             <RouterLink to="/" class="goods-item">
-              <img :src="good.picture" alt="" />
+              <img v-img-lazy="good.picture" alt="" />
               <p class="name ellipsis">{{ good.name }}</p>
               <p class="desc ellipsis">{{ good.desc }}</p>
               <p class="price">&yen;{{ good.price }}</p>

@@ -16,7 +16,7 @@ export const useLazyData = (apiFn) => {
           // 调用API获取数据
           apiFn().then(data => {
             result.value = data.result
-            // console.log('请求了');
+            console.log('请求了');
           })
         }
       }

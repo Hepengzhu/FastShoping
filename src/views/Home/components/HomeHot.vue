@@ -4,8 +4,11 @@ import { getHotAPI } from '@/apis/home'
 import { ref,onMounted } from 'vue'
 import { useLazyData } from '@/hooks/index.js'
 
-const hotList = ref([])
-const {target,result} = useLazyData(getHotAPI)
+
+// 优化 数据懒加载
+const {'target':hot,'result':hotList} = useLazyData(getHotAPI)
+
+// const hotList = ref([])
 // const getHotList = async () => {
 //   const res = await getHotAPI()
 //   hotList.value = res.result
@@ -16,11 +19,11 @@ const {target,result} = useLazyData(getHotAPI)
 </script>
 
 <template>
-  <div ref="target">
+  <div ref="hot">
     <HomePanel title="人气推荐" sub-title="人气爆款 不容错过">
     <!-- 插槽部分 -->
       <ul class="goods-list">
-        <li v-for="item in result" :key="item.id">
+        <li v-for="item in hotList" :key="item.id">
           <RouterLink to="/">
             <img v-img-lazy="item.picture" alt="">
             <p class="name">{{ item.title }}</p>
