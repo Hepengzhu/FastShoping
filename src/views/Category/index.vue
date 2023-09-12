@@ -1,3 +1,3 @@
 <template>
-    我是kkk页面
+    我是分类页面
 </template>
