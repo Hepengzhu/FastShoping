@@ -1,29 +1,30 @@
 <script setup>
-import { onMounted, ref } from 'vue';
-import { getCategoryAPI } from '../../apis/category';
-import {useRoute} from 'vue-router'
-import {getBannerApi} from '@/apis/home.js'
+import { onMounted, ref } from "vue";
+import { getCategoryAPI } from "../../apis/category";
+import { useRoute } from "vue-router";
+import { getBannerApi } from "@/apis/home.js";
+import GoodsItem from '../Home/components/GoodsItem.vue'
 // 获取路由实例
-const route = useRoute()
-const getCategoryData = ref({})
-const getCategory = async()=>{
-    // 路由传参
-    const res = await getCategoryAPI(route.params.id)
-    getCategoryData.value = res.result
-}
-onMounted(()=>{
-    getCategory()
-})
+const route = useRoute();
+const getCategoryData = ref({});
+const getCategory = async () => {
+  // 路由传参
+  const res = await getCategoryAPI(route.params.id);
+  getCategoryData.value = res.result;
+};
+onMounted(() => {
+  getCategory();
+});
 
 // 获取 banner 数据 (商品 参数为2)
-const bannerList = ref([])
-const getBanner = async()=>{
-    const res = await getBannerApi({distributionSite:2})
-    bannerList.value = res.result
-}
-onMounted(()=>{
-  getBanner()
-})
+const bannerList = ref([]);
+const getBanner = async () => {
+  const res = await getBannerApi({ distributionSite: 2 });
+  bannerList.value = res.result;
+};
+onMounted(() => {
+  getBanner();
+});
 </script>
 
 <template>
@@ -39,11 +40,32 @@ onMounted(()=>{
       <!-- 轮播图 -->
       <div class="home-banner">
         <el-carousel height="500px">
-        <el-carousel-item v-for="item in bannerList" :key="item.id">
-            <img :src='item.imgUrl' alt="">
-        </el-carousel-item>
+          <el-carousel-item v-for="item in bannerList" :key="item.id">
+            <img :src="item.imgUrl" alt="" />
+          </el-carousel-item>
         </el-carousel>
-    </div>
+      </div>
+
+      <!-- 商品展示 -->
+      <div class="sub-list">
+        <h3>全部分类</h3>
+        <ul>
+          <li v-for="i in getCategoryData.children" :key="i.id">
+            <RouterLink to="/">
+              <img v-img-lazy="i.picture" />
+              <p>{{ i.name }}</p>
+            </RouterLink>
+          </li>
+        </ul>
+      </div>
+      <div class="ref-goods" v-for="item in getCategoryData.children" :key="item.id">
+        <div class="head">
+          <h3>- {{ item.name }}-</h3>
+        </div>
+        <div class="body">
+          <GoodsItem v-for="goods in item.goods" :goods="goods" :key="goods.id"/>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -71,7 +93,6 @@ onMounted(()=>{
       li {
         width: 168px;
         height: 160px;
-
 
         a {
           text-align: center;
