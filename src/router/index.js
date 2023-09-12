@@ -17,6 +17,7 @@ const router = createRouter({
           component:()=>import('../views/Home/index.vue')
         },
         {
+          // 路由传参  id
           path:'category/:id',
           component:()=>import('../views/Category/index.vue')
         }
