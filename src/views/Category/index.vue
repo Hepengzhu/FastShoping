@@ -1,40 +1,17 @@
 <script setup>
-import { onMounted, ref } from "vue";
-import { getCategoryAPI } from "../../apis/category";
-import { onBeforeRouteUpdate, useRoute } from "vue-router";
-import { getBannerApi } from "@/apis/home.js";
-import GoodsItem from '../Home/components/GoodsItem.vue'
+import GoodsItem from '../Home/components/GoodsItem.vue';
+// 引入 
+import { useBanner } from "./composables/useBanner";
+import {useCategory} from "./composables/useCategory"
 // 获取路由实例
-const route = useRoute();
-const getCategoryData = ref({});
-const getCategory = async (id = route.params.id) => {
-  // 路由传参
-  const res = await getCategoryAPI(id);
-  getCategoryData.value = res.result;
-};
-onMounted(() => {
-  getCategory();
-});
 
-// 获取 banner 数据 (商品 参数为2)
-const bannerList = ref([]);
-const getBanner = async () => {
-  const res = await getBannerApi({ distributionSite: 2 });
-  bannerList.value = res.result;
-};
-onMounted(() => {
-  getBanner();
-});
 
-// 解决路由缓存问题
-// 当路由参数变化时重新发送 分类接口数据
-onBeforeRouteUpdate((to,from,next)=>{
-  // console.log('路由变化了');
-  // banner数据是共用的不需要重新发送
-  // 获取最新的路由参数 发送请求
-  getCategory(to.params.id);
-  next()
-})
+// 获取banner数据
+const {bannerList} = useBanner()
+const {getCategoryData} = useCategory()
+
+
+
 </script>
 
 <template>
