@@ -21,6 +21,12 @@ onMounted(() => {
         <!-- 吸顶组件 -->
         <LayoutFixed></LayoutFixed>
         <!-- 二级路由出口 -->
+        <!-- 解决路由缓存问题   
+            1.添加key 破坏复用机制 强制销毁重建  (key不同新旧虚拟dom对比时会替换)
+            2.使用路由钩子函数  路由变换时重新发送请求
+        -->
+        <!-- <router-view :key="$route.fullPath"></router-view> -->
+
         <router-view></router-view>
         <!-- Footer -->
         <LayoutFooter></LayoutFooter>
