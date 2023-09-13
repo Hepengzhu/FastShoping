@@ -20,7 +20,12 @@ const router = createRouter({
           // 路由传参  id
           path:'category/:id',
           component:()=>import('../views/Category/index.vue')
-        }
+        },
+        {
+          // 路由传参  id
+          path:'category/sub/:id',
+          component:()=>import('../views/SubCategory/index.vue')
+        },
       ]
     },
     {
