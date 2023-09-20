@@ -24,7 +24,7 @@ const {'target':hot,'result':hotList} = useLazyData(getHotAPI)
     <!-- 插槽部分 -->
       <ul class="goods-list">
         <li v-for="item in hotList" :key="item.id">
-          <RouterLink to="/">
+          <RouterLink :to="`detail/${item.id}`">
             <img v-img-lazy="item.picture" alt="">
             <p class="name">{{ item.title }}</p>
             <p class="desc">{{ item.alt }}</p>

@@ -16,8 +16,8 @@ import HomePanel from './components/HomePanel.vue';
     <HomeHot />
     <!-- <HomeBrand></HomeBrand> -->
     <HomeProduct />
-    <!-- 测试 组件 -->
-    <HomePanel title="新鲜好物" sub-title="jjjjjjjjj"></HomePanel>
+    <!-- 测试 组件
+    <HomePanel title="新鲜好物" sub-title="jjjjjjjjj"></HomePanel> -->
 </template>
 <style scoped>
  
