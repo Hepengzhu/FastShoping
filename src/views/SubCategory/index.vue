@@ -1,7 +1,7 @@
 <script setup>
-import {ref,onMounted} from 'vue'
-import {getCategoryFilterAPI,getSubCategoryAPI} from '@/apis/category.js'
-import {useRoute} from 'vue-router'
+import {ref,onMounted} from 'vue';
+import {getCategoryFilterAPI,getSubCategoryAPI} from '@/apis/category.js';
+import {useRoute} from 'vue-router';
 import GoodsItem from '../Home/components/GoodsItem.vue';
 
 // 获取 
@@ -34,7 +34,27 @@ onMounted(() => {
   getGoodsList()
 })
 
+// tab 切换
+const tabChange = ()=>{
+  reqData.value.page = 1
+  getGoodsList()
+}
 
+// 加载更多
+const disabled = ref(false) //是否禁用加载
+const load = async()=>{
+  console.log('加载更多了');
+  // 获取下一页数据
+  reqData.value.page++
+  const res = await getSubCategoryAPI(reqData.value)
+  // 如果还有数据  （最后会返回一个空的列表）
+  if(res.result.items.length != 0) {
+    goodsList.value = [...goodsList.value,...res.result.items]
+    return
+  }
+  // 禁止加载
+  disabled.value = true
+}
 </script>
 
 <template>
@@ -48,8 +68,10 @@ onMounted(() => {
         <el-breadcrumb-item>{{ categoryData.name }}</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    <div class="sub-container">
-      <el-tabs>
+    <!-- v-infinite-scroll： 监听划到底部触发事件 -->
+    <div class="sub-container" v-infinite-scroll="load" :infinite-scroll-disabled="disabled">
+      <!-- elementui Tabs  -->
+      <el-tabs v-model="reqData.sortField" @tab-change="tabChange">
         <el-tab-pane label="最新商品" name="publishTime"></el-tab-pane>
         <el-tab-pane label="最高人气" name="orderNum"></el-tab-pane>
         <el-tab-pane label="评论最多" name="evaluateNum"></el-tab-pane>
