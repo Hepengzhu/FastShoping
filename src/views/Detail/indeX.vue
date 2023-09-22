@@ -1,4 +1,5 @@
 <script setup>
+import DetailHot from './components/DetailHot.vue';
 import {ref,onMounted} from 'vue'
 import {getDetail} from '@/apis/detail.js'
 import {useRoute} from 'vue-router'
@@ -7,7 +8,6 @@ const route = useRoute()
 const getDetailData = async()=>{
     const res = await getDetail(route.params.id)
     goods.value = res.result
-    console.log(res.result);
 }
 onMounted(() => {
     getDetailData()
@@ -118,7 +118,10 @@ onMounted(() => {
             </div>
             <!-- 24热榜+专题推荐 -->
             <div class="goods-aside">
-
+              <!-- 24小时热榜 -->
+              <DetailHot></DetailHot>
+              <!-- 周热榜 -->
+              <DetailHot></DetailHot>
             </div>
           </div>
         </div>
