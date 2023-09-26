@@ -1,25 +1,41 @@
 <script setup>
 import {getHotGoodsAPI} from '@/apis/detail.js'    
-import {onMounted, ref} from 'vue'
+import {computed, onMounted, ref} from 'vue'
 import {useRoute} from 'vue-router'
 const route = useRoute()
 const hotList = ref([])
+
+const props = defineProps({
+  hotType:{
+    type:Number
+  }
+})
+// 适配title
+const TYPMAP = {
+  1:'24小时热榜',
+  2:'周热榜'
+}
+const title = computed(()=>{
+  return TYPMAP[props.hotType]
+})
+
 const getHotList = async()=>{
     const res = await getHotGoodsAPI({
         id:route.params.id,
-        type:1
+        type:props.hotType
     })
     hotList.value = res.result
 }
 onMounted(()=>{
     getHotList()
 })
+
 </script>
 
 
 <template>
   <div class="goods-hot">
-    <h3>周日榜单</h3>
+  <h3>{{ title }}</h3>
     <!-- 商品区块 -->
     <RouterLink to="/" class="goods-item" v-for="item in hotList" :key="item.id">
       <img :src="item.picture" alt="" />
