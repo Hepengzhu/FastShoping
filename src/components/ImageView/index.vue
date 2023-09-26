@@ -1,5 +1,6 @@
 <script setup>
-import { ref } from "vue"
+import { ref, watch } from "vue"
+import { useMouseInElement } from "@vueuse/core";
 
 // 图片列表
 const imageList = [
@@ -15,16 +16,37 @@ const activeIndex = ref(0)
 const clcikImage = (i)=>{
     activeIndex.value = i
 }
+// 放大镜效果
+const target = ref(null)
+const left = ref(0)
+const top = ref(0)
+// 获取在target元素内的坐标
+const {elementX,elementY,isOutside} = useMouseInElement(target)
+// 监听鼠标的移动，滑块在有效范围内移动
+watch([elementX,elementY],()=>{
+    // 左右 在范围内
+    if(elementX.value > 100 && elementX.value < 300) {left.value = elementX.value  - 100}
+    // 不在范围内
+    if(elementX.value < 100) {left.value = 0}
+    if(elementX.value > 300) {left.value = 200} //靠右边
+    // 上下
+    if(elementY.value  >100 && elementY.value  < 300) {top.value = elementY.value  - 100}
+    if(elementY.value < 100) {top.value = 0}
+    if(elementY.value > 300) {top.value = 200} //靠下边
+
+})
+
 </script>
 
 
-<template>
-  <div class="goods-image">
+<template> 
+    {{ elementX }}  {{ elementY }}
+   <div class="goods-image">
     <!-- 左侧大图-->
     <div class="middle" ref="target">
       <img :src="imageList[activeIndex]" alt="" />
       <!-- 蒙层小滑块 -->
-      <div class="layer" :style="{ left: `0px`, top: `0px` }"></div>
+      <div class="layer" :style="{ left: `${left}px`, top: `${top}px` }"></div>
     </div>
     <!-- 小图列表 -->
     <ul class="small">
