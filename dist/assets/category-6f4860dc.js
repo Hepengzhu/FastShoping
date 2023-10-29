@@ -1,0 +1,1 @@
+import{Z as t}from"./index-67d3d504.js";function a(r){return t({url:"/category",params:{id:r}})}const o=r=>t({url:"/category/sub/filter",params:{id:r}}),g=r=>t({url:"/category/goods/temporary",method:"POST",data:r});export{o as a,g as b,a as g};
